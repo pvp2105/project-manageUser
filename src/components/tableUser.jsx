@@ -23,6 +23,8 @@ function TableUser(props) {
     const [sortBy, setSortBy] = useState("asc")
     const [sortField, setSortField] = useState("id")
 
+    const [dataExport, setDataExport] = useState("id")
+
     const handleCloseModal = () => {
         setIsShowModalAdd(false);
         setIsShowModalEdit(false);
@@ -94,14 +96,42 @@ function TableUser(props) {
         }
     }, 800)
 
+    const getUserExport = (event, done) => {
+        let result = []
+        if (listUsers && listUsers.length > 0) {
+            result.push(['Id', 'Email', 'First name', 'Last Name'])
+            listUsers.map(item => {
+                let arr = []
+                arr[0] = item.id
+                arr[1] = item.email
+                arr[2] = item.first_name
+                arr[3] = item.last_name
+                result.push(arr)
+            })
+            setDataExport(result)
+            done()
+        }
+    }
+
     return (
         <div className='container' >
             <div className="add-new m-3">
                 <span><b> List Users</b></span>
-                <span>
+                <div>
+                    <label htmlFor="test" className='btn btn-warning'><i className="fa-solid fa-file-import"></i> Import</label>
+                    <input id='test' type="file" hidden />
+                    <CSVLink
+                        data={dataExport}
+                        filename={"users.csv"}
+                        asyncOnClick={true} //asyncOnClick: Chờ hàm onClick thực hiện xong thì mới get data
+                        onClick={getUserExport}
+                        className="btn btn-primary ms-2"
+                    >
+                        <i className="fa-solid fa-download"></i> Export
+                    </CSVLink>
 
-                    <button className="btn btn-primary ms-5" onClick={() => setIsShowModalAdd(true)}>Add New User</button>
-                </span>
+                    <button className="btn btn-success ms-5" onClick={() => setIsShowModalAdd(true)}>Add New User</button>
+                </div>
             </div>
             <div className='col-md-6 my-3'>
                 <input className='form-control'
