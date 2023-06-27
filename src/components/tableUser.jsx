@@ -5,7 +5,8 @@ import ReactPaginate from 'react-paginate'
 import ModalAddUser from "./modalAddUser";
 import ModalEditUser from './modalEditUser';
 import ModalConfirm from './modalConfirm';
-import _ from 'lodash'
+import _, { debounce } from 'lodash'
+import { CSVLink, CSVDownload } from "react-csv";
 
 function TableUser(props) {
     const [listUsers, setListUsers] = useState([])
@@ -21,7 +22,6 @@ function TableUser(props) {
 
     const [sortBy, setSortBy] = useState("asc")
     const [sortField, setSortField] = useState("id")
-
 
     const handleCloseModal = () => {
         setIsShowModalAdd(false);
@@ -83,21 +83,40 @@ function TableUser(props) {
         setListUsers(cloneListUsers)
     }
 
+    const handleSearch = debounce((event) => {
+        let term = event.target.value;
+        if (term) {
+            let cloneListUsers = _.cloneDeep(listUsers)
+            cloneListUsers = cloneListUsers.filter(item => item.email.includes(term))
+            setListUsers(cloneListUsers)
+        } else {
+            getUser(1)
+        }
+    }, 800)
+
     return (
         <div className='container' >
             <div className="add-new m-3">
                 <span><b> List Users</b></span>
-                <button className="btn btn-success" onClick={() => setIsShowModalAdd(true)}>Add New User</button>
-            </div>
+                <span>
 
+                    <button className="btn btn-primary ms-5" onClick={() => setIsShowModalAdd(true)}>Add New User</button>
+                </span>
+            </div>
+            <div className='col-md-6 my-3'>
+                <input className='form-control'
+                    placeholder='Search User by Email...'
+                    onChange={(event) => handleSearch(event)}
+                />
+            </div>
             <Table striped bordered hover>
                 <thead>
                     <tr>
                         <th className='sort-header' >
                             <span>ID</span>
                             <span className='ms-2'>
-                                <i class="fa-solid fa-down-long" style={{ cursor: 'pointer' }} onClick={() => handdleSort("desc", "id")}></i>
-                                <i class="fa-solid fa-up-long ms-2" style={{ cursor: 'pointer' }} onClick={() => handdleSort("asc", "id")}></i>
+                                <i className="fa-solid fa-down-long" style={{ cursor: 'pointer' }} onClick={() => handdleSort("desc", "id")}></i>
+                                <i className="fa-solid fa-up-long ms-2" style={{ cursor: 'pointer' }} onClick={() => handdleSort("asc", "id")}></i>
                             </span>
                         </th>
                         <th className='sort-email'>Email</th>
@@ -106,8 +125,8 @@ function TableUser(props) {
                                 First Name
                             </span>
                             <span className='ms-2'>
-                                <i class="fa-solid fa-down-long" style={{ cursor: 'pointer' }} onClick={() => handdleSort("desc", "first_name")}></i>
-                                <i class="fa-solid fa-up-long ms-2" style={{ cursor: 'pointer' }} onClick={() => handdleSort("asc", "first_name")}></i>
+                                <i className="fa-solid fa-down-long" style={{ cursor: 'pointer' }} onClick={() => handdleSort("desc", "first_name")}></i>
+                                <i className="fa-solid fa-up-long ms-2" style={{ cursor: 'pointer' }} onClick={() => handdleSort("asc", "first_name")}></i>
                             </span></th>
                         <th className='sort-lastName' >Last Name</th>
                     </tr>
