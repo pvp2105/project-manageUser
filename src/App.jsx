@@ -1,5 +1,7 @@
 import "./App.scss";
-import HomePage from "./Pages/homepage";
+import ManageUsersPage from "./Pages/manageUsersPage";
+import HomePage from "./Pages/homePage";
+import LoginPage from "./Pages/loginPage";
 import { Route, Routes } from "react-router-dom";
 
 function App() {
@@ -7,6 +9,8 @@ function App() {
     <div className="App">
       <Routes>
         <Route path="/" element={<HomePage />} />
+        <Route path="/manageUsers" element={<ManageUsersPage />} />
+        <Route path="/login" element={<LoginPage />} />
       </Routes>
     </div>
   );

@@ -1,5 +1,4 @@
 import Header from "../components/header";
-import TableUser from "../components/tableUser";
 import { ToastContainer } from "react-toastify";
 
 function HomePage() {
@@ -9,8 +8,23 @@ function HomePage() {
       <div>
         <Header />
         <div className="container app-container">
-
-          <TableUser />
+          <div>
+            1. Login. Axios. Store to local Storage
+            2. Private routes. Check token
+            3. CRUD users
+            - List users
+            - Create a user
+            - Edit a user
+            - Delete a user
+            4. Customize list users
+            - Paginate list user
+            - Filter by id/email
+            - Sort by first name
+            5. Working with Excel
+            - Import excel
+            - Export Excel
+          </div>
+          <a href="/login">Go to Login</a>
         </div>
       </div>
       <ToastContainer

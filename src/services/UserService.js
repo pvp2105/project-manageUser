@@ -16,4 +16,8 @@ function deleteUser(id) {
   return axios.delete(`/api/users/${id}`);
 }
 
-export { fetchDataUser, postCreateUser, putUpdateUser, deleteUser };
+function loginApi(email, password) {
+  return axios.post("/api/login", { email, password });
+}
+
+export { fetchDataUser, postCreateUser, putUpdateUser, deleteUser, loginApi };
