@@ -28,6 +28,7 @@ export interface ApiResponse<T = any> extends AxiosResponse {
   statusCode: number;
   total: number;
   total_pages: number;
+  id: number;
 }
 
 export { fetchDataUser, postCreateUser, putUpdateUser, deleteUser, loginApi };

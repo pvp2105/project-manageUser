@@ -3,6 +3,7 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { postCreateUser } from "../services/UserService";
 import { toast } from "react-toastify";
+import { ApiResponse } from "../services/UserService";
 
 function ModalAddUser(props: any) {
   const { show, handleClose, handleUpdateTable } = props;
@@ -10,13 +11,13 @@ function ModalAddUser(props: any) {
   const [job, setJob] = useState("");
 
   const handleSaveUser = async () => {
-    let res = await postCreateUser(name, job);
-    if (res && res.data.id) {
+    let res = (await postCreateUser(name, job)) as ApiResponse;
+    if (res && res.id) {
       handleClose();
       setName("");
       setJob("");
       toast.success("A User is created succeed");
-      handleUpdateTable({ first_name: name, id: res.data.id });
+      handleUpdateTable({ first_name: name, id: res.id });
     } else {
       toast.error("An error... ");
     }
