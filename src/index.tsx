@@ -9,7 +9,9 @@ import "react-toastify/dist/ReactToastify.css";
 import reportWebVitals from "./reportWebVitals";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 
-const root = ReactDOM.createRoot(document.getElementById("root"));
+const root = ReactDOM.createRoot(
+  document.getElementById("root") as HTMLElement
+);
 root.render(
   <React.StrictMode>
     <Router>
